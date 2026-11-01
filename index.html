@@ -8,9 +8,9 @@
 <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="theme-color" content="#07080b">
-<meta property="og:title" content="Puerta Web · Webs que dan ganas de entrar">
-<meta property="og:description" content="Webs para negocios de toda España desde 50 €. Lista en 5 días y la ves antes de pagar.">
-<meta property="og:image" content="https://puertaweb.com/preview.png">
+<meta property="og:title" content="Puerta Web · Tu negocio, con una web que vende">
+<meta property="og:description" content="Diseño web profesional para negocios de toda España. Propuesta gratis en 24 h, la ves antes de pagar y precio cerrado desde 50 €.">
+<meta property="og:image" content="https://puertaweb.com/preview.png?v=2">
 <meta property="og:url" content="https://puertaweb.com">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="description" content="Diseño web para negocios de toda España desde 50 €. Primero la ves, luego decides.">
@@ -579,6 +579,52 @@ form#f input:focus,form#f textarea:focus{border-color:#9b6bff!important;box-shad
 .stars button:hover{transform:scale(1.15)}
 .rev-ok{color:#7ce0a4;font-weight:600}
 
+
+/* ===== Móvil: menos scroll ===== */
+.rev-toggle{margin-top:16px}
+.rev-form[hidden]{display:none!important}
+@media (max-width:700px){
+  .sec{padding-block:64px}
+  .marquee,#galeria,.wall .wrow.rev{display:none!important}
+  .wall{padding-block:56px}
+  .wall-t{font-size:2.1rem}
+  .wc{width:46vw!important}
+  /* números en una fila */
+  .nums{padding-block:56px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .num{grid-template-columns:1fr!important;border:1px solid var(--line)!important;border-radius:18px;padding:16px 12px!important;gap:6px!important;align-content:start}
+  .big{font-size:3.2rem!important}
+  .big small{display:block;font-size:.3em!important;margin-top:6px}
+  .num h3{font-size:.95rem!important;line-height:1.2}
+  .num p{display:none}
+  /* tarjetas en carrusel horizontal */
+  .rows,.plans,.steps{display:flex!important;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px!important;margin-inline:-18px;padding:4px 18px 14px;scrollbar-width:none;border:0!important;border-radius:0!important}
+  .rows::-webkit-scrollbar,.plans::-webkit-scrollbar,.steps::-webkit-scrollbar{display:none}
+  .row,.plan,.step{flex:0 0 80%;scroll-snap-align:center}
+  .row{grid-template-columns:1fr!important;min-height:0}
+  .row .viz{width:100%;aspect-ratio:2.4}
+  .plan{border:1px solid var(--line)!important;border-radius:20px}
+  .plan[aria-checked="true"]{border-color:var(--pc)!important}
+  .step{border:1px solid var(--line);border-radius:18px;padding:20px!important}
+  .steps::before{display:none}
+  .swipe{display:block!important}
+  .feat .stick h2,.sec-h h2,.qr-t,.c-grid h2,.ba-top h2{font-size:2.3rem!important}
+  .sec-h{margin-bottom:22px}
+  .sec-h p,.feat .stick p{font-size:1rem}
+  /* carta QR más compacta */
+  .qr-stage{height:300px}
+  .qr-card{width:44%;padding:12px}
+  .qr-txt p:not(.qr-try){display:none}
+  /* precios */
+  .launch>div{padding:18px}
+  .launch .lt span{display:none}
+  .ex{padding:8px 12px;font-size:.85rem}
+  /* contacto */
+  .c-steps{display:none}
+  .c-grid{gap:22px}
+  .faq summary{padding:16px 0;font-size:1rem}
+}
+.swipe{display:none;color:var(--dim);font-size:.85rem;margin:-6px 0 6px}
+
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -676,6 +722,7 @@ form#f input:focus,form#f textarea:focus{border-color:#9b6bff!important;box-shad
         <h2>Lo que lleva tu web.</h2>
         <p>Lo justo para que un cliente que te encuentra en Google acabe escribiéndote. Nada de relleno.</p>
       </div>
+      <p class="swipe">Desliza para ver más →</p>
       <div class="rows">
         <div class="row"><div><h3>Abierto o cerrado, en directo</h3><p>Tu horario se actualiza solo. El cliente sabe al momento si puede ir ahora.</p></div>
           <div class="viz v-open" aria-hidden="true"><div style="text-align:center"><b id="vClock">--:--</b><br><span id="vState">● Abierto ahora</span></div></div></div>
@@ -720,6 +767,7 @@ form#f input:focus,form#f textarea:focus{border-color:#9b6bff!important;box-shad
           <a class="btn light" id="launchBtn" href="#contacto">Quiero una plaza</a></div>
         </div>
       </div>
+      <p class="swipe">Desliza para ver los planes →</p>
       <div class="plans" role="radiogroup" aria-label="Pack">
         <button class="plan" type="button" role="radio" aria-checked="false" data-pack="basica">
           <span class="pn">Básica</span>
@@ -765,6 +813,7 @@ form#f input:focus,form#f textarea:focus{border-color:#9b6bff!important;box-shad
   <section class="sec" id="proceso" style="padding-top:0">
     <div class="wrap">
       <div class="sec-h"><h2>Cómo trabajo.</h2></div>
+      <p class="swipe">Desliza →</p>
       <div class="steps">
         <div class="step"><span class="when">Día 1</span><h3>Hablamos</h3><p>Me cuentas tu negocio por WhatsApp o videollamada. Te doy un precio cerrado.</p></div>
         <div class="step"><span class="when">Día 2</span><h3>Primera versión</h3><p>Te enseño la web en tu móvil. Hasta aquí no pagas nada.</p></div>
@@ -778,7 +827,8 @@ form#f input:focus,form#f textarea:focus{border-color:#9b6bff!important;box-shad
     <div class="wrap">
       <div class="sec-h"><h2>Lo que dicen.</h2><p id="revNote">Puerta Web acaba de abrir. Aquí aparecerán las opiniones reales de mis primeros clientes, con su nombre y su negocio.</p></div>
       <div class="reviews" id="revList"></div>
-      <form class="rev-form" id="rf" novalidate>
+      <button class="btn rev-toggle" type="button" id="rfOpen">Dejar mi opinión</button>
+      <form class="rev-form" id="rf" novalidate hidden>
         <h3>¿Has trabajado conmigo? Deja tu opinión</h3>
         <p class="sub">La reviso y la publico aquí con tu nombre y tu negocio.</p>
         <input type="hidden" name="_subject" value="Nueva opinión para Puerta Web"><input type="hidden" name="_captcha" value="false"><input type="hidden" name="_template" value="table">
@@ -1019,6 +1069,7 @@ form#f input:focus,form#f textarea:focus{border-color:#9b6bff!important;box-shad
 
 
   /* Dejar opinión */
+  $("rfOpen").addEventListener("click",()=>{$("rf").hidden=false;$("rfOpen").remove();$("rName").focus();});
   const stars=[...document.querySelectorAll("#stars button")];
   stars.forEach(b=>b.addEventListener("click",()=>{const v=+b.dataset.v;$("rStars").value=v+"/5";stars.forEach(x=>{x.classList.toggle("on",+x.dataset.v<=v);x.setAttribute("aria-checked",+x.dataset.v===v);});}));
   $("rf").addEventListener("submit",async e=>{e.preventDefault();const m=$("rMsg");m.className="f-msg";
