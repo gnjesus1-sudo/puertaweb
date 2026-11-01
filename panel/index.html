@@ -124,9 +124,11 @@ main{padding-top:22px;padding-bottom:50px}
   <form class="lbox" id="loginForm">
     <img src="icon.svg" alt="">
     <h1>Panel de Puerta Web</h1>
-    <p>Entra con tu correo. Te enviaremos un enlace para acceder sin contraseña.</p>
-    <input class="in" id="lEmail" type="email" autocomplete="email" placeholder="tu@email.com" required>
-    <button class="btn pri" type="submit">Enviarme el enlace</button>
+    <p id="lSub">Entra con tu correo y tu contraseña. Se queda guardado en este dispositivo.</p>
+    <input class="in" id="lEmail" type="email" autocomplete="username" placeholder="tu@email.com" value="gnjesus1@gmail.com" required>
+    <input class="in" id="lPass" type="password" autocomplete="current-password" placeholder="Contraseña (mínimo 8 caracteres)" minlength="8" required>
+    <button class="btn pri" type="submit" id="lBtn">Entrar</button>
+    <button class="btn" type="button" id="lMode">Es la primera vez: crear mi contraseña</button>
     <p class="note" id="lMsg" role="status"></p>
   </form>
 </section>
@@ -189,11 +191,15 @@ main{padding-top:22px;padding-bottom:50px}
     $("vLogin").classList.add("hide");$("vApp").classList.remove("hide");
     loadAll();
   }
+  let creating=false;
+  $("lMode").addEventListener("click",()=>{creating=!creating;$("lBtn").textContent=creating?"Crear contraseña y entrar":"Entrar";$("lMode").textContent=creating?"Ya tengo contraseña":"Es la primera vez: crear mi contraseña";$("lPass").autocomplete=creating?"new-password":"current-password";$("lMsg").textContent="";});
   $("loginForm").addEventListener("submit",async e=>{
-    e.preventDefault();const m=$("lMsg");m.className="note";m.textContent="Enviando…";
-    const {error}=await sb.auth.signInWithOtp({email:$("lEmail").value.trim(),options:{emailRedirectTo:location.origin+"/panel/",shouldCreateUser:true}});
-    if(error){m.className="note err";m.textContent="No se ha podido enviar: "+error.message;}
-    else{m.className="note ok";m.textContent="Listo. Abre el enlace que te ha llegado al correo (mira también en spam).";}
+    e.preventDefault();const m=$("lMsg"),email=$("lEmail").value.trim(),password=$("lPass").value;m.className="note";m.textContent=creating?"Creando…":"Entrando…";
+    if(password.length<8){m.className="note err";m.textContent="La contraseña debe tener al menos 8 caracteres.";return;}
+    const {data,error}=creating?await sb.auth.signUp({email,password}):await sb.auth.signInWithPassword({email,password});
+    if(error){m.className="note err";m.textContent=/Invalid login/i.test(error.message)?"Correo o contraseña incorrectos.":/registered/i.test(error.message)?"Ya tienes contraseña creada: pulsa “Ya tengo contraseña” y entra.":"Error: "+error.message;return;}
+    if(creating&&!data.session){m.className="note ok";m.textContent="Cuenta creada. Revisa tu correo para confirmarla y luego entra aquí.";return;}
+    boot();
   });
   $("logout").addEventListener("click",async()=>{await sb.auth.signOut();location.reload();});
   sb.auth.onAuthStateChange((ev)=>{if(ev==="SIGNED_IN"){history.replaceState(null,"",location.pathname);boot();}});
