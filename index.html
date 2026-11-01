@@ -717,9 +717,11 @@ form#f input:focus,form#f textarea:focus{border-color:#9b6bff!important;box-shad
         <p class="c-alt">¿Prefieres hablar? Llámame al <a href="tel:+34682913832">682 913 832</a> <span class="muted">(lunes a viernes, 10:00–20:00)</span></p>
       </div>
 
-      <form id="f" name="contacto" method="POST" data-netlify="true" netlify-honeypot="empresa_web" novalidate>
-        <input type="hidden" name="form-name" value="contacto">
-        <p hidden><label>No rellenar<input name="empresa_web"></label></p>
+      <form id="f" name="contacto" method="POST" novalidate>
+        <input type="hidden" name="_subject" value="Nueva solicitud en Puerta Web">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <p hidden><label>No rellenar<input name="_honey"></label></p>
         <div class="f-row">
           <label>Nombre<input name="nombre" id="cNombre" autocomplete="name" required></label>
           <label>Email<input name="email" id="cEmail" type="email" autocomplete="email" required></label>
@@ -988,8 +990,8 @@ form#f input:focus,form#f textarea:focus{border-color:#9b6bff!important;box-shad
     if(!$("cOk").checked){msg.textContent="Marca la casilla de privacidad para poder enviarlo.";return;}
     const btn=form.querySelector(".send");btn.disabled=true;btn.querySelector("span").textContent="Enviando…";
     try{
-      const r=await fetch("/",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams(new FormData(form)).toString()});
-      if(!r.ok)throw 0;
+      const fd=new FormData(form);if(fd.get("_honey"))throw 0;const r=await fetch("https://formsubmit.co/ajax/gnjesus1@gmail.com",{method:"POST",headers:{"Accept":"application/json"},body:fd});
+      const j=await r.json().catch(()=>({}));if(!r.ok||String(j.success)==="false")throw 0;
       form.classList.add("sent");$("fDone").hidden=false;
     }catch(err){
       msg.innerHTML='No se ha podido enviar. Inténtalo de nuevo o llámame al <a href="tel:+34682913832">682 913 832</a>.';
