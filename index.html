@@ -8,6 +8,9 @@
 <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="theme-color" content="#07080b">
+<link rel="canonical" href="https://puertaweb.com/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "ProfessionalService", "name": "Puerta Web", "url": "https://puertaweb.com", "logo": "https://puertaweb.com/apple-touch-icon.png", "image": "https://puertaweb.com/preview.png", "description": "Diseño web para negocios de toda España desde 50 €. Lista en 5 días y la ves antes de pagar.", "telephone": "+34682913832", "areaServed": "ES", "address": {"@type": "PostalAddress", "addressLocality": "Madrid", "addressCountry": "ES"}, "priceRange": "50€ - 180€"}</script>
+<script data-goatcounter="https://puertaweb.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 <meta property="og:title" content="Puerta Web · Tu negocio, con una web que vende">
 <meta property="og:description" content="Diseño web profesional para negocios de toda España. Propuesta gratis en 24 h, la ves antes de pagar y precio cerrado desde 50 €.">
 <meta property="og:image" content="https://puertaweb.com/preview.png?v=2">
@@ -625,6 +628,18 @@ form#f input:focus,form#f textarea:focus{border-color:#9b6bff!important;box-shad
 }
 .swipe{display:none;color:var(--dim);font-size:.85rem;margin:-6px 0 6px}
 
+
+/* Pie con enlaces */
+.mfoot{padding-top:50px!important}
+.mfoot .fgrid{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:30px;margin-bottom:30px}
+@media (max-width:760px){.mfoot .fgrid{grid-template-columns:1fr}}
+.mfoot .fgrid b{display:block;color:var(--ink);margin-bottom:10px}
+.mfoot .fgrid a{display:block;text-decoration:none;padding:4px 0;color:var(--dim)}
+.mfoot .fgrid a:hover{color:var(--ink)}
+.mfoot .fgrid p{margin:0 0 8px}
+.mfoot .fbot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;border-top:1px solid var(--line);padding-top:22px}
+.consent a{color:var(--ink)}
+
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -899,7 +914,7 @@ form#f input:focus,form#f textarea:focus{border-color:#9b6bff!important;box-shad
           <input type="hidden" name="presupuesto" id="cPresupuesto">
         </fieldset>
         <label>Cuéntame tu proyecto<textarea name="mensaje" id="cMsg" placeholder="Qué haces, qué te gustaría que hiciera tu web, si tienes web o dominio…"></textarea></label>
-        <label class="consent"><input type="checkbox" id="cOk" required> <span>Acepto que use estos datos solo para responder a mi solicitud.</span></label>
+        <label class="consent"><input type="checkbox" id="cOk" required> <span>Acepto que use estos datos solo para responder a mi solicitud (<a href="privacidad.html" target="_blank">privacidad</a>).</span></label>
         <button class="btn light send" type="submit"><span>Enviar solicitud</span></button>
         <p class="f-msg" id="fMsg" role="status"></p>
         <div class="f-done" id="fDone" hidden>
@@ -912,7 +927,11 @@ form#f input:focus,form#f textarea:focus{border-color:#9b6bff!important;box-shad
   </section>
 </main>
 
-<footer><div class="wrap"><span>© 2026 Puerta Web · Negocios y fotos de ejemplo (fotos: Unsplash)</span><a href="#escena">Volver arriba</a></div></footer>
+<footer class="mfoot"><div class="wrap fgrid">
+<div><b>Puerta Web</b><p>Diseño web para negocios de toda España.</p><a href="#contacto">Pedir presupuesto</a></div>
+<div><b>Webs por sector</b><a href="webs-para-bares.html">Webs para bares</a><a href="webs-para-restaurantes.html">Webs para restaurantes</a><a href="webs-para-peluquerias.html">Webs para peluquerías</a><a href="webs-para-talleres.html">Webs para talleres</a><a href="webs-para-gimnasios.html">Webs para gimnasios</a><a href="webs-para-clinicas.html">Webs para clínicas y fisios</a></div>
+<div><b>Legal</b><a href="aviso-legal.html">Aviso legal</a><a href="privacidad.html">Privacidad y cookies</a></div>
+</div><div class="wrap fbot"><span>© 2026 Puerta Web · Negocios y fotos de ejemplo (fotos: Unsplash)</span><a href="#escena">Volver arriba</a></div></footer>
 
 <a class="fab" id="fab" href="#contacto">Pedir presupuesto</a>
 
