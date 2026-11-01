@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Panel · Puerta Web</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Puerta Web">
+<meta name="theme-color" content="#07080b">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap">
+<style>
+:root{--bg:#07080b;--card:#0f1117;--card2:#151821;--ink:#f3f1ec;--ink2:#b9bcc7;--dim:#7d808c;--line:#1f222b;
+  --acc:#9b6bff;--bar:#8f6bff;--good:#19c486;--warn:#ffb020;--bad:#ff5d5d;--f:"Archivo",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.5 var(--f);-webkit-font-smoothing:antialiased}
+body{padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:inherit}
+h1,h2,h3{margin:0;letter-spacing:-.02em;line-height:1.1}
+.glow{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(600px 400px at 0% 0%,rgba(255,106,26,.16),transparent 70%),radial-gradient(700px 500px at 100% 10%,rgba(155,107,255,.18),transparent 70%),radial-gradient(600px 500px at 50% 110%,rgba(61,123,255,.12),transparent 70%)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 18px}
+/* Login */
+.login{min-height:100svh;display:grid;place-items:center;padding:24px}
+.lbox{width:min(420px,100%);background:rgba(15,17,23,.85);border:1px solid var(--line);border-radius:24px;padding:30px;display:grid;gap:16px;backdrop-filter:blur(12px)}
+.lbox img{width:54px;height:54px;border-radius:14px}
+.lbox h1{font-size:1.8rem;font-weight:800}
+.lbox p{color:var(--ink2);margin:0}
+.in{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:13px 14px}
+.in:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 4px rgba(155,107,255,.18)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);background:var(--card2);border-radius:999px;padding:10px 16px;font-weight:700;font-size:.9rem;text-decoration:none;transition:background .15s,border-color .15s}
+.btn:hover{border-color:#3a3d48}
+.btn.pri{background:var(--ink);color:var(--bg);border-color:var(--ink);padding:14px}
+.note{font-size:.9rem;color:var(--ink2)}
+.ok{color:var(--good)}.err{color:var(--bad)}
+/* App */
+.top{position:sticky;top:0;z-index:10;background:rgba(7,8,11,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.topin{display:flex;align-items:center;justify-content:space-between;gap:12px;height:62px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.05rem}
+.brand img{width:30px;height:30px;border-radius:8px}
+.tabs{display:flex;gap:4px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px}
+.tabs button{border:0;background:none;padding:8px 14px;border-radius:999px;font-weight:600;color:var(--ink2);display:flex;gap:6px;align-items:center}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg)}
+.badge{min-width:20px;height:20px;padding:0 6px;border-radius:99px;background:var(--bad);color:#fff;font-size:.72rem;display:inline-grid;place-items:center;font-weight:800}
+.tabs button[aria-selected="true"] .badge{background:var(--bad)}
+.out{border:0;background:none;color:var(--dim);font-size:.85rem}
+@media (max-width:760px){
+  .topin{height:56px}.brand span{display:none}
+  .tabs{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));justify-content:space-around;z-index:20;box-shadow:0 20px 40px -10px rgba(0,0,0,.8)}
+  .tabs button{flex:1;justify-content:center;padding:10px 6px;font-size:.85rem}
+  main{padding-bottom:90px}
+}
+main{padding-top:22px;padding-bottom:50px}
+.head{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.head h1{font-size:clamp(1.7rem,4vw,2.4rem);font-weight:800;font-stretch:92%}
+.head p{margin:4px 0 0;color:var(--dim)}
+.seg{display:flex;gap:4px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px}
+.seg button{border:0;background:none;padding:6px 12px;border-radius:999px;font-weight:600;font-size:.85rem;color:var(--ink2)}
+.seg button[aria-pressed="true"]{background:var(--card2);color:var(--ink);box-shadow:0 0 0 1px #2c2f3a inset}
+.grid{display:grid;gap:14px}
+.kpis{grid-template-columns:repeat(4,1fr)}
+@media (max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.card{background:rgba(15,17,23,.85);border:1px solid var(--line);border-radius:20px;padding:18px}
+.kpi .l{color:var(--ink2);font-size:.85rem;font-weight:600}
+.kpi .v{font-size:2.3rem;font-weight:900;font-stretch:115%;letter-spacing:-.04em;line-height:1.05;margin-top:6px;font-variant-numeric:tabular-nums}
+.kpi .d{font-size:.82rem;color:var(--dim);margin-top:4px}
+.kpi .d b{font-weight:700}.up{color:var(--good)}.down{color:var(--bad)}
+.two{grid-template-columns:1.6fr 1fr}
+@media (max-width:900px){.two{grid-template-columns:1fr}}
+.card h2{font-size:1.05rem;font-weight:700;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.card h2 small{color:var(--dim);font-weight:500;font-size:.82rem}
+/* chart */
+.chart{position:relative;height:220px}
+.chart svg{width:100%;height:100%;display:block;overflow:visible}
+.chart .gl{stroke:#1d2029;stroke-width:1}
+.chart .ax{fill:var(--dim);font-size:11px}
+.chart .b{fill:var(--bar)}
+.chart .b.hov{fill:#b9a1ff}
+.chart .b.today{fill:#c7b4ff}
+.tip{position:absolute;pointer-events:none;background:#1b1e27;border:1px solid #2c2f3a;border-radius:10px;padding:7px 10px;font-size:.82rem;white-space:nowrap;transform:translate(-50%,-110%);opacity:0;transition:opacity .1s;box-shadow:0 10px 24px -8px rgba(0,0,0,.7)}
+.tip b{font-size:1rem}
+/* bar list */
+.bl{display:grid;gap:8px}
+.bl .r{display:grid;grid-template-columns:1fr auto;gap:4px 10px;align-items:center;font-size:.9rem}
+.bl .r span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink2)}
+.bl .r b{font-variant-numeric:tabular-nums;font-weight:700}
+.bl .t{grid-column:1/-1;height:6px;border-radius:99px;background:#191c24;overflow:hidden}
+.bl .t i{display:block;height:100%;border-radius:99px;background:var(--bar)}
+.empty{color:var(--dim);font-size:.9rem;padding:8px 0}
+/* leads */
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 13px;font-weight:600;font-size:.85rem;color:var(--ink2)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.lead{display:grid;gap:10px}
+.lead .lh{display:flex;justify-content:space-between;gap:10px;align-items:start}
+.lead h3{font-size:1.15rem;font-weight:800}
+.lead .biz{color:var(--ink2);font-size:.92rem}
+.lead .when{color:var(--dim);font-size:.8rem;white-space:nowrap}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:.78rem;font-weight:600;padding:4px 9px;border-radius:99px;background:#1a1d26;color:var(--ink2);border:1px solid #242734}
+.msg{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 12px;color:var(--ink2);white-space:pre-wrap;font-size:.92rem}
+.acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.st{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:8px 12px;font-weight:700;font-size:.85rem}
+.st.nuevo{color:#ffd27a;border-color:#4a3a14}.st.contactado{color:#9ec0ff;border-color:#1d3366}.st.cerrado{color:#7ce0a4;border-color:#14432d}.st.descartado{color:var(--dim)}
+.notes{width:100%;min-height:44px;resize:vertical;background:var(--bg);border:1px dashed #2a2d38;border-radius:10px;padding:8px 10px;font-size:.88rem;color:var(--ink2)}
+.list{display:grid;gap:12px}
+.rv .stars{color:#ffb020;letter-spacing:2px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:1px}
+.hide{display:none!important}
+.toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom));transform:translate(-50%,20px);background:#1b1e27;border:1px solid #2c2f3a;border-radius:99px;padding:10px 16px;font-weight:600;font-size:.9rem;opacity:0;transition:all .25s;z-index:30}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div class="glow" aria-hidden="true"></div>
+
+<section class="login hide" id="vLogin">
+  <form class="lbox" id="loginForm">
+    <img src="icon.svg" alt="">
+    <h1>Panel de Puerta Web</h1>
+    <p>Entra con tu correo. Te enviaremos un enlace para acceder sin contraseña.</p>
+    <input class="in" id="lEmail" type="email" autocomplete="email" placeholder="tu@email.com" required>
+    <button class="btn pri" type="submit">Enviarme el enlace</button>
+    <p class="note" id="lMsg" role="status"></p>
+  </form>
+</section>
+
+<div id="vApp" class="hide">
+  <header class="top"><div class="wrap topin">
+    <div class="brand"><img src="icon.svg" alt=""><span>Puerta Web</span></div>
+    <nav class="tabs" role="tablist">
+      <button role="tab" data-v="resumen" aria-selected="true">Visitas</button>
+      <button role="tab" data-v="leads" aria-selected="false">Solicitudes <span class="badge hide" id="bLeads"></span></button>
+      <button role="tab" data-v="reviews" aria-selected="false">Opiniones <span class="badge hide" id="bRev"></span></button>
+    </nav>
+    <button class="out" id="logout" type="button">Salir</button>
+  </div></header>
+
+  <main class="wrap">
+    <section id="v-resumen">
+      <div class="head"><div><h1>Visitas</h1><p id="rangeTxt"></p></div>
+        <div class="seg" id="range"><button data-d="1" aria-pressed="false">Hoy</button><button data-d="7" aria-pressed="false">7 días</button><button data-d="30" aria-pressed="true">30 días</button><button data-d="90" aria-pressed="false">90 días</button></div></div>
+      <div class="grid kpis" id="kpis"></div>
+      <div class="grid two" style="margin-top:14px">
+        <div class="card"><h2>Visitas por día <small id="chartNote"></small></h2><div class="chart" id="chart"><div class="tip" id="tip"></div></div></div>
+        <div class="card"><h2>De dónde llegan</h2><div class="bl" id="sources"></div></div>
+      </div>
+      <div class="grid two" style="margin-top:14px">
+        <div class="card"><h2>Páginas más vistas</h2><div class="bl" id="pages"></div></div>
+        <div class="card"><h2>Dispositivo</h2><div class="bl" id="devices"></div></div>
+      </div>
+    </section>
+
+    <section id="v-leads" class="hide">
+      <div class="head"><div><h1>Solicitudes</h1><p>Lo que te envían desde el formulario de presupuesto.</p></div></div>
+      <div class="filters" id="lf"><button class="chip" data-s="todas" aria-pressed="true">Todas</button><button class="chip" data-s="nuevo" aria-pressed="false">Nuevas</button><button class="chip" data-s="contactado" aria-pressed="false">Contactadas</button><button class="chip" data-s="cerrado" aria-pressed="false">Cerradas</button><button class="chip" data-s="descartado" aria-pressed="false">Descartadas</button></div>
+      <div class="list" id="leads"></div>
+    </section>
+
+    <section id="v-reviews" class="hide">
+      <div class="head"><div><h1>Opiniones</h1><p>Publica las que quieras mostrar en la web.</p></div></div>
+      <div class="list" id="reviews"></div>
+    </section>
+  </main>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function(){
+  const sb=supabase.createClient("https://hhygvkdfdgmrcvnvicci.supabase.co","sb_publishable_iCLa8SskhWH9WvDmKzZCGg_lYKzDRgI");
+  const $=id=>document.getElementById(id);
+  const esc=t=>String(t??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const fmtN=n=>n.toLocaleString("es-ES");
+  const toast=t=>{const e=$("toast");e.textContent=t;e.classList.add("on");clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove("on"),1800);};
+  try{localStorage.setItem("pw_owner","1");}catch(e){}
+
+  /* ---------- Sesión ---------- */
+  async function boot(){
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session){$("vLogin").classList.remove("hide");$("vApp").classList.add("hide");return;}
+    if(session.user.email!=="gnjesus1@gmail.com"){await sb.auth.signOut();$("lMsg").textContent="Este panel es privado.";$("vLogin").classList.remove("hide");return;}
+    $("vLogin").classList.add("hide");$("vApp").classList.remove("hide");
+    loadAll();
+  }
+  $("loginForm").addEventListener("submit",async e=>{
+    e.preventDefault();const m=$("lMsg");m.className="note";m.textContent="Enviando…";
+    const {error}=await sb.auth.signInWithOtp({email:$("lEmail").value.trim(),options:{emailRedirectTo:location.origin+"/panel/",shouldCreateUser:true}});
+    if(error){m.className="note err";m.textContent="No se ha podido enviar: "+error.message;}
+    else{m.className="note ok";m.textContent="Listo. Abre el enlace que te ha llegado al correo (mira también en spam).";}
+  });
+  $("logout").addEventListener("click",async()=>{await sb.auth.signOut();location.reload();});
+  sb.auth.onAuthStateChange((ev)=>{if(ev==="SIGNED_IN"){history.replaceState(null,"",location.pathname);boot();}});
+
+  /* ---------- Pestañas ---------- */
+  document.querySelectorAll(".tabs button").forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-selected",x===b));
+    ["resumen","leads","reviews"].forEach(v=>$("v-"+v).classList.toggle("hide",v!==b.dataset.v));
+    scrollTo(0,0);
+  }));
+
+  /* ---------- Visitas ---------- */
+  let days=30,visits=[];
+  document.querySelectorAll("#range button").forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll("#range button").forEach(x=>x.setAttribute("aria-pressed",x===b));days=+b.dataset.d;loadVisits();}));
+  const dayKey=d=>{const x=new Date(d);return x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")+"-"+String(x.getDate()).padStart(2,"0");};
+  async function fetchVisits(fromISO){
+    let out=[],from=0;
+    while(true){const {data,error}=await sb.from("visits").select("created_at,path,source,device,first_in_session").gte("created_at",fromISO).order("created_at",{ascending:true}).range(from,from+999);
+      if(error||!data)break;out=out.concat(data);if(data.length<1000)break;from+=1000;}
+    return out;
+  }
+  async function loadVisits(){
+    const now=new Date(),start=new Date(now);start.setHours(0,0,0,0);start.setDate(start.getDate()-(days-1));
+    const prevStart=new Date(start);prevStart.setDate(prevStart.getDate()-days);
+    const all=await fetchVisits(prevStart.toISOString());
+    visits=all.filter(v=>new Date(v.created_at)>=start);const prev=all.filter(v=>new Date(v.created_at)<start);
+    $("rangeTxt").textContent=days===1?"Hoy":`Del ${start.toLocaleDateString("es-ES",{day:"numeric",month:"short"})} a hoy`;
+    const sess=a=>a.filter(v=>v.first_in_session).length;
+    const {count:newLeads}=await sb.from("leads").select("id",{count:"exact",head:true}).gte("created_at",start.toISOString());
+    const pct=(a,b)=>b?Math.round((a-b)/b*100):null;
+    const delta=(a,b)=>{const p=pct(a,b);return p===null?'<span>sin datos del periodo anterior</span>':`<b class="${p>=0?"up":"down"}">${p>=0?"▲":"▼"} ${Math.abs(p)}%</b> vs periodo anterior`;};
+    const mob=visits.length?Math.round(visits.filter(v=>v.device==="movil").length/visits.length*100):0;
+    $("kpis").innerHTML=[
+      ["Visitantes",sess(visits),delta(sess(visits),sess(prev))],
+      ["Páginas vistas",visits.length,delta(visits.length,prev.length)],
+      ["Solicitudes",newLeads||0,"en este periodo"],
+      ["Desde el móvil",mob+"%","del total de páginas vistas"]
+    ].map(([l,v,d])=>`<div class="card kpi"><div class="l">${l}</div><div class="v">${typeof v==="number"?fmtN(v):v}</div><div class="d">${d}</div></div>`).join("");
+    drawChart(start,now);
+    barList("sources",count(visits.filter(v=>v.first_in_session),v=>v.source||"Directo"));
+    barList("pages",count(visits,v=>prettyPath(v.path)));
+    barList("devices",count(visits,v=>({movil:"Móvil",tablet:"Tablet",ordenador:"Ordenador"})[v.device]||"Otro"));
+  }
+  const prettyPath=p=>{p=(p||"/").split("#")[0];if(p==="/"||p==="/index.html")return"Inicio";return p.replace(/^\//,"").replace(/\.html$/,"").replace(/-/g," ");};
+  function count(arr,fn){const m=new Map();arr.forEach(v=>{const k=fn(v);m.set(k,(m.get(k)||0)+1);});return [...m].sort((a,b)=>b[1]-a[1]);}
+  function barList(id,rows){
+    const el=$(id);if(!rows.length){el.innerHTML='<p class="empty">Todavía no hay datos.</p>';return;}
+    const max=rows[0][1],tot=rows.reduce((s,r)=>s+r[1],0);
+    el.innerHTML=rows.slice(0,7).map(([k,n])=>`<div class="r"><span title="${esc(k)}">${esc(k)}</span><b>${fmtN(n)} <small style="color:var(--dim);font-weight:500">${Math.round(n/tot*100)}%</small></b><div class="t"><i style="width:${Math.max(3,n/max*100)}%"></i></div></div>`).join("");
+  }
+  function drawChart(start,now){
+    const el=$("chart"),tip=$("tip");el.querySelector("svg")?.remove();
+    let buckets=[],labelOf,keyOf;
+    if(days===1){for(let h=0;h<24;h++)buckets.push({k:h,n:0,lab:h+":00"});keyOf=v=>new Date(v.created_at).getHours();$("chartNote").textContent="por hora";}
+    else{for(let i=0;i<days;i++){const d=new Date(start);d.setDate(d.getDate()+i);buckets.push({k:dayKey(d),n:0,lab:d.toLocaleDateString("es-ES",{weekday:"short",day:"numeric",month:"short"})});}keyOf=v=>dayKey(v.created_at);$("chartNote").textContent="páginas vistas";}
+    const idx=new Map(buckets.map((b,i)=>[b.k,i]));visits.forEach(v=>{const i=idx.get(keyOf(v));if(i!==undefined)buckets[i].n++;});
+    const W=el.clientWidth||600,H=el.clientHeight,pl=30,pb=22,pt=8,iw=W-pl,ih=H-pb-pt;
+    const max=Math.max(4,...buckets.map(b=>b.n)),step=Math.ceil(max/4),top=step*4;
+    const bw=iw/buckets.length,gap=Math.min(4,bw*.25);
+    let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Visitas por ${days===1?"hora":"día"}">`;
+    for(let i=0;i<=4;i++){const y=pt+ih-ih*i/4;s+=`<line class="gl" x1="${pl}" x2="${W}" y1="${y}" y2="${y}"/><text class="ax" x="${pl-6}" y="${y+4}" text-anchor="end">${step*i}</text>`;}
+    const every=Math.ceil(buckets.length/8);
+    buckets.forEach((b,i)=>{const h=b.n?Math.max(3,ih*b.n/top):0,x=pl+i*bw+gap/2,y=pt+ih-h,w=Math.max(1,bw-gap);
+      s+=`<path class="b${i===buckets.length-1?" today":""}" data-i="${i}" d="M${x},${pt+ih}V${y+Math.min(4,h)}a${Math.min(4,w/2,h)} ${Math.min(4,w/2,h)} 0 0 1 ${Math.min(4,w/2,h)} -${Math.min(4,w/2,h)}H${x+w-Math.min(4,w/2,h)}a${Math.min(4,w/2,h)} ${Math.min(4,w/2,h)} 0 0 1 ${Math.min(4,w/2,h)} ${Math.min(4,w/2,h)}V${pt+ih}Z"/>`;
+      s+=`<rect data-i="${i}" x="${pl+i*bw}" y="${pt}" width="${bw}" height="${ih}" fill="transparent"/>`;
+      if(i%every===0)s+=`<text class="ax" x="${pl+i*bw+bw/2}" y="${H-4}" text-anchor="middle">${days===1?b.k:new Date(start.getTime()+i*864e5).getDate()}</text>`;});
+    s+="</svg>";el.insertAdjacentHTML("afterbegin",s);
+    const svg=el.querySelector("svg");
+    svg.addEventListener("pointermove",e=>{const t=e.target.dataset.i;if(t===undefined)return;const b=buckets[t];
+      svg.querySelectorAll(".b").forEach(p=>p.classList.toggle("hov",p.dataset.i===t));
+      const r=el.getBoundingClientRect();tip.style.left=(pl+(+t+.5)*bw)/W*r.width+"px";tip.style.top=(pt+ih-(b.n?ih*b.n/top:0))/H*r.height+"px";
+      tip.innerHTML=`${esc(b.lab)}<br><b>${b.n}</b> ${b.n===1?"página vista":"páginas vistas"}`;tip.style.opacity=1;});
+    svg.addEventListener("pointerleave",()=>{tip.style.opacity=0;svg.querySelectorAll(".b").forEach(p=>p.classList.remove("hov"));});
+  }
+  addEventListener("resize",()=>{if(!$("vApp").classList.contains("hide"))loadVisits();});
+
+  /* ---------- Solicitudes ---------- */
+  let leads=[],lfilter="todas";
+  document.querySelectorAll("#lf .chip").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll("#lf .chip").forEach(x=>x.setAttribute("aria-pressed",x===b));lfilter=b.dataset.s;renderLeads();}));
+  async function loadLeads(){const {data}=await sb.from("leads").select("*").order("created_at",{ascending:false}).limit(500);leads=data||[];renderLeads();}
+  const ago=d=>{const s=(Date.now()-new Date(d))/1000;if(s<3600)return"hace "+Math.max(1,Math.round(s/60))+" min";if(s<86400)return"hace "+Math.round(s/3600)+" h";return new Date(d).toLocaleDateString("es-ES",{day:"numeric",month:"short",year:s>3e7?"numeric":undefined});};
+  function renderLeads(){
+    const n=leads.filter(l=>l.status==="nuevo").length;$("bLeads").textContent=n;$("bLeads").classList.toggle("hide",!n);
+    const list=leads.filter(l=>lfilter==="todas"||l.status===lfilter);
+    $("leads").innerHTML=list.length?list.map(l=>`<article class="card lead" data-id="${l.id}">
+      <div class="lh"><div><h3>${esc(l.nombre)}</h3><div class="biz">${esc(l.negocio||"")}</div></div><span class="when">${ago(l.created_at)}</span></div>
+      <div class="tags">${(l.servicio||"").split(",").filter(Boolean).map(t=>`<span class="tag">${esc(t.trim())}</span>`).join("")}${l.presupuesto?`<span class="tag">💶 ${esc(l.presupuesto)}</span>`:""}</div>
+      ${l.mensaje?`<div class="msg">${esc(l.mensaje)}</div>`:""}
+      <div class="acts">
+        <select class="st ${l.status}" aria-label="Estado">${["nuevo","contactado","cerrado","descartado"].map(s=>`<option value="${s}"${s===l.status?" selected":""}>${s[0].toUpperCase()+s.slice(1)}</option>`).join("")}</select>
+        <a class="btn" href="mailto:${esc(l.email)}?subject=${encodeURIComponent("Tu web con Puerta Web")}">✉️ ${esc(l.email)}</a>
+        ${l.telefono?`<a class="btn" href="tel:${esc(l.telefono)}">📞 ${esc(l.telefono)}</a>`:""}
+      </div>
+      <textarea class="notes" placeholder="Notas privadas (precio acordado, próximos pasos…)">${esc(l.notas||"")}</textarea>
+    </article>`).join(""):'<div class="card empty">No hay solicitudes aquí todavía.</div>';
+  }
+  $("leads").addEventListener("change",async e=>{const card=e.target.closest(".lead");if(!card||!e.target.classList.contains("st"))return;
+    const id=+card.dataset.id,status=e.target.value;const {error}=await sb.from("leads").update({status}).eq("id",id);
+    if(error)return toast("No se ha podido guardar");leads.find(l=>l.id===id).status=status;renderLeads();toast("Estado guardado");});
+  $("leads").addEventListener("focusout",async e=>{if(!e.target.classList.contains("notes"))return;const card=e.target.closest(".lead"),id=+card.dataset.id,l=leads.find(x=>x.id===id),v=e.target.value;
+    if((l.notas||"")===v)return;const {error}=await sb.from("leads").update({notas:v||null}).eq("id",id);if(error)return toast("No se han podido guardar las notas");l.notas=v;toast("Notas guardadas");});
+
+  /* ---------- Opiniones ---------- */
+  let reviews=[];
+  async function loadReviews(){const {data}=await sb.from("reviews").select("*").order("created_at",{ascending:false});reviews=data||[];renderReviews();}
+  function renderReviews(){
+    const n=reviews.filter(r=>r.status==="pendiente").length;$("bRev").textContent=n;$("bRev").classList.toggle("hide",!n);
+    const col={pendiente:"#ffb020",publicada:"#19c486",oculta:"#7d808c"};
+    $("reviews").innerHTML=reviews.length?reviews.map(r=>`<article class="card lead rv" data-id="${r.id}">
+      <div class="lh"><div><h3>${esc(r.nombre)}</h3><div class="biz">${esc(r.negocio||"")}</div></div><span class="when"><span class="dot" style="background:${col[r.status]}"></span>${r.status} · ${ago(r.created_at)}</span></div>
+      ${r.puntuacion?`<div class="stars" aria-label="${r.puntuacion} de 5">${"★".repeat(r.puntuacion)}${"☆".repeat(5-r.puntuacion)}</div>`:""}
+      <div class="msg">${esc(r.opinion)}</div>
+      <div class="acts">${r.status!=="publicada"?`<button class="btn" data-a="publicada">Publicar en la web</button>`:`<button class="btn" data-a="oculta">Quitar de la web</button>`}<button class="btn" data-a="borrar" style="color:var(--bad)">Borrar</button></div>
+    </article>`).join(""):'<div class="card empty">Todavía no te han dejado ninguna opinión.</div>';
+  }
+  $("reviews").addEventListener("click",async e=>{const b=e.target.closest("button[data-a]");if(!b)return;const id=+b.closest(".rv").dataset.id,a=b.dataset.a;
+    if(a==="borrar"){if(!b.dataset.ok){b.dataset.ok=1;b.textContent="¿Seguro? Pulsa otra vez";return;}const {error}=await sb.from("reviews").delete().eq("id",id);if(error)return toast("No se ha podido borrar");reviews=reviews.filter(r=>r.id!==id);renderReviews();return toast("Opinión borrada");}
+    const {error}=await sb.from("reviews").update({status:a}).eq("id",id);if(error)return toast("No se ha podido guardar");reviews.find(r=>r.id===id).status=a;renderReviews();toast(a==="publicada"?"Publicada en la web":"Quitada de la web");});
+
+  function loadAll(){loadVisits();loadLeads();loadReviews();}
+  setInterval(()=>{if(!document.hidden&&!$("vApp").classList.contains("hide"))loadAll();},60000);
+  boot();
+})();
+</script>
+</body>
+</html>

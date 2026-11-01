@@ -412,6 +412,7 @@ body{background:transparent}
 .rev-empty{grid-column:1/-1;border-style:dashed!important;background:linear-gradient(135deg,rgba(255,106,26,.08),rgba(155,107,255,.08))!important;justify-items:start}
 .rev-empty p{color:var(--dim)}
 .rev-empty q{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;letter-spacing:-.02em}
+.rstars{color:#ffb020;letter-spacing:2px}
 .rev q{font-size:1.1rem;line-height:1.55;quotes:none}
 .rev footer{display:flex;gap:12px;align-items:center;border:0;padding:0;color:var(--dim);font-size:.9rem}
 .rev footer i{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:800;color:#fff;background:var(--c)}
@@ -642,6 +643,7 @@ form#f input:focus,form#f textarea:focus{border-color:#9b6bff!important;box-shad
 
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
+<script src="track.js" defer></script>
 </head>
 <body>
 
@@ -1041,8 +1043,16 @@ form#f input:focus,form#f textarea:focus{border-color:#9b6bff!important;box-shad
 
   /* Opiniones reales: añade aquí cada reseña cuando la tengas y la sección aparece sola.
      Formato: {name:"Nombre", biz:"Negocio, Ciudad", text:"Lo que dijo", c:"#3d7bff"} */
-  const REVIEWS=[];
-  if(!REVIEWS.length){$("revList").innerHTML=`<figure class="rev rev-empty" style="margin:0"><q>Tu opinión podría ser la primera.</q><p>Web Básica a 30 € para mis 5 primeros clientes, a cambio de una opinión sincera.</p><a class="btn light" href="#contacto" onclick="document.getElementById('launchBtn').click()">Quiero una plaza</a></figure>`;}else{$("revNote").remove();$("revList").innerHTML=REVIEWS.map(r=>`<figure class="rev" style="margin:0;--c:${r.c||"#9b6bff"}"><q>${r.text}</q><footer><i>${r.name[0]}</i><span><b>${r.name}</b>${r.biz}</span></footer></figure>`).join("");}
+  let REVIEWS=[];
+  const esc=t=>String(t??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  function renderReviews(){
+    if(!REVIEWS.length){$("revList").innerHTML=`<figure class="rev rev-empty" style="margin:0"><q>Tu opinión podría ser la primera.</q><p>Web Básica a 30 € para mis 5 primeros clientes, a cambio de una opinión sincera.</p><a class="btn light" href="#contacto" onclick="document.getElementById('launchBtn').click()">Quiero una plaza</a></figure>`;return;}
+    const cs=["#ff6a1a","#3d7bff","#ff4f9a","#19c486","#9b6bff"];
+    $("revNote")&&$("revNote").remove();
+    $("revList").innerHTML=REVIEWS.map((r,k)=>`<figure class="rev" style="margin:0;--c:${cs[k%5]}">${r.puntuacion?`<span class="rstars" aria-label="${r.puntuacion} de 5">${"★".repeat(r.puntuacion)}${"☆".repeat(5-r.puntuacion)}</span>`:""}<q>${esc(r.opinion)}</q><footer><i>${esc(r.nombre)[0]||"?"}</i><span><b>${esc(r.nombre)}</b>${esc(r.negocio)}</span></footer></figure>`).join("");
+  }
+  renderReviews();
+  window.addEventListener("load",()=>{window.PW&&PW.published().then(d=>{if(Array.isArray(d)&&d.length){REVIEWS=d;renderReviews();}}).catch(()=>{});});
 
   /* Títulos que se revelan palabra a palabra */
   document.querySelectorAll(".qr-t,.wall-t,.sec-h h2,.ba-top h2,.g-head h2,.feat .stick h2,.c-grid h2").forEach(h=>{
@@ -1107,7 +1117,8 @@ form#f input:focus,form#f textarea:focus{border-color:#9b6bff!important;box-shad
     if(!$("rName").value.trim()||!$("rText").value.trim()){m.textContent="Escribe tu nombre y tu opinión.";return;}
     if(!$("rStars").value){m.textContent="Elige una puntuación.";return;}
     const fd=new FormData($("rf"));if(fd.get("_honey"))return;
-    try{await sendForm(fd);
+    const rv={nombre:fd.get("nombre"),negocio:fd.get("negocio")||null,puntuacion:parseInt(fd.get("puntuacion"))||null,opinion:fd.get("opinion")};
+    try{const res=await Promise.all([window.PW?PW.review(rv).catch(()=>false):false,sendForm(fd).catch(()=>false)]);if(!res[0]&&!res[1])throw 0;
       $("rf").innerHTML='<h3>¡Gracias por tu opinión!</h3><p class="rev-ok">La reviso y la publico en unos días.</p>';}
     catch(err){m.textContent="No se ha podido enviar. Inténtalo de nuevo en un momento.";}
   });
@@ -1182,7 +1193,7 @@ form#f input:focus,form#f textarea:focus{border-color:#9b6bff!important;box-shad
     if(!$("cOk").checked){msg.textContent="Marca la casilla de privacidad para poder enviarlo.";return;}
     const btn=form.querySelector(".send");btn.disabled=true;btn.querySelector("span").textContent="Enviando…";
     try{
-      const fd=new FormData(form);if(fd.get("_honey"))throw 0;await sendForm(fd);
+      const fd=new FormData(form);if(fd.get("_honey"))throw 0;const lead={nombre:fd.get("nombre"),email:fd.get("email"),telefono:fd.get("telefono")||null,negocio:fd.get("negocio")||null,servicio:fd.get("servicio")||null,presupuesto:fd.get("presupuesto")||null,mensaje:fd.get("mensaje")||null};const saved=window.PW?PW.lead(lead).catch(()=>false):Promise.resolve(false);const mailed=sendForm(fd).catch(()=>false);const res=await Promise.all([saved,mailed]);if(!res[0]&&!res[1])throw 0;
       form.classList.add("sent");$("fDone").hidden=false;
     }catch(err){
       msg.innerHTML='No se ha podido enviar. Inténtalo de nuevo o llámame al <a href="tel:+34682913832">682 913 832</a>.';
