@@ -3,7 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Puerta Web</title>
+<title>Puerta Web · Webs para negocios</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#07080b">
+<meta property="og:title" content="Puerta Web · Webs que dan ganas de entrar">
+<meta property="og:description" content="Webs para negocios de toda España desde 50 €. Lista en 5 días y la ves antes de pagar.">
+<meta property="og:image" content="https://puertaweb.com/preview.png">
+<meta property="og:url" content="https://puertaweb.com">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="description" content="Diseño web para negocios de toda España desde 50 €. Primero la ves, luego decides.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -397,6 +406,9 @@ body{background:transparent}
 /* ===== Opiniones (se muestra solo si hay reseñas reales) ===== */
 .reviews{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
 .rev{border:1px solid var(--line);border-radius:22px;padding:26px;background:rgba(14,16,22,.7);display:grid;gap:16px;align-content:space-between}
+.rev-empty{grid-column:1/-1;border-style:dashed!important;background:linear-gradient(135deg,rgba(255,106,26,.08),rgba(155,107,255,.08))!important;justify-items:start}
+.rev-empty p{color:var(--dim)}
+.rev-empty q{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;letter-spacing:-.02em}
 .rev q{font-size:1.1rem;line-height:1.55;quotes:none}
 .rev footer{display:flex;gap:12px;align-items:center;border:0;padding:0;color:var(--dim);font-size:.9rem}
 .rev footer i{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:800;color:#fff;background:var(--c)}
@@ -514,7 +526,7 @@ form#f input:focus,form#f textarea:focus{border-color:#9b6bff!important;box-shad
 
 <header id="hdr">
   <div class="wrap bar">
-    <a class="brand" href="#escena"><span class="door" aria-hidden="true"></span>Puerta Web</a>
+    <a class="brand" href="#escena"><img src="favicon.svg" alt="" width="30" height="30" style="border-radius:8px">Puerta Web</a>
     <nav>
       <a href="#antes">Antes y después</a>
       <a href="#carta-qr">Carta QR</a>
@@ -731,9 +743,9 @@ form#f input:focus,form#f textarea:focus{border-color:#9b6bff!important;box-shad
     </div>
   </section>
 
-  <section class="sec" id="opiniones" style="padding-top:0" hidden>
+  <section class="sec" id="opiniones" style="padding-top:0">
     <div class="wrap">
-      <div class="sec-h"><h2>Lo que dicen.</h2></div>
+      <div class="sec-h"><h2>Lo que dicen.</h2><p id="revNote">Puerta Web acaba de abrir. Aquí aparecerán las opiniones reales de mis primeros clientes, con su nombre y su negocio.</p></div>
       <div class="reviews" id="revList"></div>
     </div>
   </section>
@@ -932,7 +944,7 @@ form#f input:focus,form#f textarea:focus{border-color:#9b6bff!important;box-shad
   /* Opiniones reales: añade aquí cada reseña cuando la tengas y la sección aparece sola.
      Formato: {name:"Nombre", biz:"Negocio, Ciudad", text:"Lo que dijo", c:"#3d7bff"} */
   const REVIEWS=[];
-  if(REVIEWS.length){$("opiniones").hidden=false;$("revList").innerHTML=REVIEWS.map(r=>`<figure class="rev" style="margin:0;--c:${r.c||"#9b6bff"}"><q>${r.text}</q><footer><i>${r.name[0]}</i><span><b>${r.name}</b>${r.biz}</span></footer></figure>`).join("");}
+  if(!REVIEWS.length){$("revList").innerHTML=`<figure class="rev rev-empty" style="margin:0"><q>Tu opinión podría ser la primera.</q><p>Web Básica a 30 € para mis 5 primeros clientes, a cambio de una opinión sincera.</p><a class="btn light" href="#contacto" onclick="document.getElementById('launchBtn').click()">Quiero una plaza</a></figure>`;}else{$("revNote").remove();$("revList").innerHTML=REVIEWS.map(r=>`<figure class="rev" style="margin:0;--c:${r.c||"#9b6bff"}"><q>${r.text}</q><footer><i>${r.name[0]}</i><span><b>${r.name}</b>${r.biz}</span></footer></figure>`).join("");}
 
   /* Títulos que se revelan palabra a palabra */
   document.querySelectorAll(".qr-t,.wall-t,.sec-h h2,.ba-top h2,.g-head h2,.feat .stick h2,.c-grid h2").forEach(h=>{
