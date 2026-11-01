@@ -422,6 +422,15 @@ body{background:transparent}
 .btn{transition:transform .25s cubic-bezier(.2,.8,.2,1),background .2s}
 
 
+/* ===== Galería sin secuestrar el scroll ===== */
+#galeria{height:auto!important}
+#galeria .pin2{position:static!important;height:auto!important;padding-block:clamp(80px,10vw,130px)}
+#galeria .track{transform:none!important;width:max-content;padding-inline:0!important}
+#galeria .gwrap{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+@media (prefers-reduced-motion:no-preference){#galeria .track{animation:wl 45s linear infinite}#galeria .gwrap:hover .track{animation-play-state:paused}}
+#galeria .card{width:clamp(220px,20vw,280px)!important}
+@media (max-width:700px){#galeria .card{width:62vw!important}}
+
 /* ===== Muro de fotos ===== */
 .wall{padding-block:clamp(70px,10vw,130px);display:grid;gap:18px;overflow:hidden}
 .wall-h{margin-bottom:18px}
@@ -635,7 +644,7 @@ form#f input:focus,form#f textarea:focus{border-color:#9b6bff!important;box-shad
   <section id="galeria" aria-label="Webs de ejemplo">
     <div class="pin2">
       <div class="wrap g-head"><h2>Así quedan.</h2><p>Cinco negocios de ejemplo. En el móvil, que es donde te van a ver.</p></div>
-      <div class="track" id="track"></div>
+      <div class="gwrap"><div class="track" id="track"></div></div>
     </div>
   </section>
 
@@ -910,8 +919,9 @@ form#f input:focus,form#f textarea:focus{border-color:#9b6bff!important;box-shad
   BIZ.forEach(b=>{const f=document.createElement("figure");f.className="card";f.style.margin=0;f.style.setProperty("--c",b.c);
     f.innerHTML=`<div class="ph"><div class="sc" style="background-image:url(${b.img})"><div class="ov"><div class="t">${b.name}<span>${b.cta}</span></div><div><strong>${b.line}</strong><div class="w">Escribir por WhatsApp</div></div></div></div></div><figcaption><b>${b.chip}</b><span>${b.url}</span></figcaption>`;
     $("track").appendChild(f);});
+  [...$("track").children].forEach(c=>{const d=c.cloneNode(true);d.setAttribute("aria-hidden","true");$("track").appendChild(d);});
   const gal=$("galeria"),track=$("track");
-  function galScroll(){if(innerWidth<=700){return;}const r=gal.getBoundingClientRect(),tot=gal.offsetHeight-innerHeight,p=Math.min(1,Math.max(0,-r.top/tot));
+  function galScroll(){return;const r=gal.getBoundingClientRect(),tot=gal.offsetHeight-innerHeight,p=Math.min(1,Math.max(0,-r.top/tot));
     const max=track.scrollWidth-innerWidth;track.style.setProperty("--tx",(-p*max)+"px");}
   addEventListener("scroll",galScroll,{passive:true});addEventListener("resize",galScroll);
   function paint(i){
