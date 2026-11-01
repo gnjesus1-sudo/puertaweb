@@ -1087,12 +1087,15 @@ form#f input:focus,form#f textarea:focus{border-color:#9b6bff!important;box-shad
     document.head.appendChild(sc);})();
 
 
-  /* Envío a FormSubmit con límite de tiempo */
+  /* Envío a Web3Forms con límite de tiempo */
   async function sendForm(fd){
     const ctl=new AbortController(),t=setTimeout(()=>ctl.abort(),15000);
-    try{const r=await fetch("https://formsubmit.co/ajax/gnjesus1@gmail.com",{method:"POST",headers:{"Accept":"application/json"},body:fd,signal:ctl.signal});
+    fd.set("access_key","980452d4-1c77-4591-bc98-20647c6dcb23");fd.set("from_name","Puerta Web");
+    if(fd.get("_subject"))fd.set("subject",fd.get("_subject"));
+    ["_subject","_captcha","_template","_honey"].forEach(k=>fd.delete(k));
+    try{const r=await fetch("https://api.web3forms.com/submit",{method:"POST",headers:{"Accept":"application/json"},body:fd,signal:ctl.signal});
       const j=await r.json().catch(()=>({}));
-      if(String(j.success)==="true"||/activat/i.test(j.message||""))return true;
+      if(j.success===true||String(j.success)==="true")return true;
       throw new Error(j.message||r.status);}
     finally{clearTimeout(t);}
   }
@@ -1153,7 +1156,7 @@ form#f input:focus,form#f textarea:focus{border-color:#9b6bff!important;box-shad
   }
   render();
 
-  /* Formulario de contacto (FormSubmit) */
+  /* Formulario de contacto (Web3Forms) */
   const form=$("f");
   document.querySelectorAll(".chips-g").forEach(g=>{
     const single=g.classList.contains("single"),hid=g.nextElementSibling;
