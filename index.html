@@ -473,6 +473,40 @@ form#f input:focus,form#f textarea:focus{border-color:#9b6bff!important;box-shad
 .card .ph{transition:transform .5s cubic-bezier(.2,.8,.2,1)}
 .card:hover .ph{transform:translateY(-10px) rotate(-1.5deg)}
 
+
+/* ===== Carta con QR ===== */
+.qr-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(30px,6vw,80px);align-items:center}
+@media (max-width:860px){.qr-grid{grid-template-columns:1fr}}
+.qr-txt{display:grid;gap:18px;justify-items:start}
+.qr-t{font-size:clamp(2.6rem,6.5vw,5rem);font-stretch:90%}
+.qr-txt p{color:var(--dim);font-size:1.1rem;max-width:42ch}
+.qr-try a{color:var(--ink);font-weight:700}
+.qr-stage{position:relative;height:clamp(420px,46vw,560px)}
+.qr-card{position:absolute;left:0;top:12%;width:min(260px,48%);padding:20px;border-radius:24px;background:#f6f3ec;color:#16181f;display:grid;gap:10px;justify-items:center;box-shadow:0 40px 80px -30px rgba(0,0,0,.9);transform:rotate(-6deg)}
+.qr-card #qrBox{width:100%;aspect-ratio:1}
+.qr-card #qrBox svg{width:100%;height:100%;display:block}
+.qr-card span{font-size:.8rem;color:#5c6070}
+.qr-card b{font-weight:800;font-size:1.1rem}
+.qr-phone{position:absolute;right:4%;top:0;height:100%;aspect-ratio:9/19;border-radius:40px;padding:9px;background:linear-gradient(145deg,#3a3d46,#121318 40%,#2a2c33);box-shadow:0 50px 100px -30px rgba(0,0,0,.9),0 0 80px -20px #ff6a1a;transform:rotate(5deg)}
+.qr-scr{height:100%;border-radius:32px;overflow:hidden;background-size:cover;background-position:center;position:relative}
+.qr-ov{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;gap:8px;padding:22px 16px;background:linear-gradient(180deg,transparent 30%,rgba(10,6,3,.92) 70%)}
+.qr-ov b{font-size:1.7rem;font-weight:800;letter-spacing:-.02em}
+.qr-ov i{font-style:normal;color:#ffb37a;font-size:.8rem;font-weight:600;margin-bottom:6px}
+.qr-ov span{display:flex;justify-content:space-between;font-size:.82rem;padding:8px 0;border-top:1px solid rgba(255,255,255,.12)}
+.qr-ov em{font-style:normal;color:#ff7a2b;font-weight:700}
+.qr-beam{position:absolute;left:24%;top:30%;width:52%;height:3px;border-radius:3px;background:linear-gradient(90deg,transparent,#19c486,transparent);box-shadow:0 0 20px #19c486;opacity:.9}
+@media (prefers-reduced-motion:no-preference){
+  .qr-beam{animation:beam 2.6s ease-in-out infinite}
+  @keyframes beam{0%,100%{transform:translateY(0) rotate(-8deg);opacity:0}15%,85%{opacity:.9}50%{transform:translateY(160px) rotate(-8deg)}}
+  .qr-card{animation:floatA 7s ease-in-out infinite}.qr-phone{animation:floatB 8s ease-in-out infinite}
+  @keyframes floatA{50%{transform:rotate(-4deg) translateY(-12px)}}
+  @keyframes floatB{50%{transform:rotate(3deg) translateY(10px)}}
+}
+
+/* ===== Brillo en el titular de la portada ===== */
+.copy h1{background:linear-gradient(100deg,var(--ink) 40%,#fff 48%,color-mix(in srgb,var(--glow) 70%,#fff) 52%,var(--ink) 60%) 0 0/250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent}
+@media (prefers-reduced-motion:no-preference){.copy h1{animation:sheen 7s ease-in-out 1.2s infinite}@keyframes sheen{0%{background-position:100% 0}40%,100%{background-position:-50% 0}}}
+
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -483,6 +517,7 @@ form#f input:focus,form#f textarea:focus{border-color:#9b6bff!important;box-shad
     <a class="brand" href="#escena"><span class="door" aria-hidden="true"></span>Puerta Web</a>
     <nav>
       <a href="#antes">Antes y después</a>
+      <a href="#carta-qr">Carta QR</a>
       <a href="#precios">Precios</a>
       <a href="#dudas">Dudas</a>
       <a class="go" href="#contacto">Pedir presupuesto</a>
@@ -609,6 +644,22 @@ form#f input:focus,form#f textarea:focus{border-color:#9b6bff!important;box-shad
           <div class="viz v-fast" aria-hidden="true" style="--c:var(--glow)">
             <small><span>Puerta Web</span><span>al instante</span></small><div class="bar"><i style="--w:18%"></i></div>
             <small><span>Plantilla típica</span><span>se hace eterna</span></small><div class="bar"><i style="--w:92%;background:#b9b6ad"></i></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec qr" id="carta-qr">
+    <div class="wrap qr-grid">
+      <div class="qr-txt">
+        <h2 class="qr-t">Tu carta, a un escaneo.</h2>
+        <p>Una carta o catálogo pensado para el móvil, con un QR para tus mesas, tu escaparate o tus tarjetas. Cambias un precio y el QR sigue valiendo.</p>
+        <p class="qr-try">Escanéalo con tu móvil y prueba una de ejemplo, o <a href="carta-demo.html" target="_blank" rel="noopener">ábrela aquí</a>.</p>
+        <a class="btn light" href="#contacto">Quiero una carta con QR</a>
+      </div>
+      <div class="qr-stage" aria-hidden="true">
+        <div class="qr-card"><div id="qrBox"></div><span>Escanea para ver la carta</span><b>Bar La Esquina</b></div>
+        <div class="qr-phone"><div class="qr-scr" style="background-image:url(https://images.unsplash.com/photo-1657053460900-3a12f32b592f?w=500&q=70&auto=format&fit=crop)"><div class="qr-ov"><b>Carta</b><i>Tapas · Raciones · Bebidas</i><span>Patatas bravas <em>4,50 €</em></span><span>Croquetas de jamón <em>6,00 €</em></span><span>Vermú de grifo <em>3,00 €</em></span></div></div></div>
+        <div class="qr-beam"></div>
       </div>
     </div>
   </section>
@@ -884,7 +935,7 @@ form#f input:focus,form#f textarea:focus{border-color:#9b6bff!important;box-shad
   if(REVIEWS.length){$("opiniones").hidden=false;$("revList").innerHTML=REVIEWS.map(r=>`<figure class="rev" style="margin:0;--c:${r.c||"#9b6bff"}"><q>${r.text}</q><footer><i>${r.name[0]}</i><span><b>${r.name}</b>${r.biz}</span></footer></figure>`).join("");}
 
   /* Títulos que se revelan palabra a palabra */
-  document.querySelectorAll(".wall-t,.sec-h h2,.ba-top h2,.g-head h2,.feat .stick h2,.c-grid h2").forEach(h=>{
+  document.querySelectorAll(".qr-t,.wall-t,.sec-h h2,.ba-top h2,.g-head h2,.feat .stick h2,.c-grid h2").forEach(h=>{
     h.classList.add("rv");h.innerHTML=h.textContent.split(" ").map((w,i)=>`<span class="w"><span style="transition-delay:${i*70}ms">${w}</span></span>`).join(" ");
   });
   const ioR=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");ioR.unobserve(e.target);}}),{threshold:.3});
@@ -919,6 +970,12 @@ form#f input:focus,form#f textarea:focus{border-color:#9b6bff!important;box-shad
     });
     (function loop(){gx+=(tx-gx)*.12;gy+=(ty-gy)*.12;glow.style.transform=`translate(${gx-210}px,${gy-210}px)`;requestAnimationFrame(loop);})();
   }
+
+
+  /* QR real que abre la carta de ejemplo */
+  (function(){const sc=document.createElement("script");sc.src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js";
+    sc.onload=()=>{try{const q=qrcode(0,"M");q.addData(location.origin.startsWith("http")?location.origin+"/carta-demo.html":"https://puertaweb.com/carta-demo.html");q.make();$("qrBox").innerHTML=q.createSvgTag({cellSize:6,margin:0,scalable:true});}catch(e){}};
+    document.head.appendChild(sc);})();
 
   /* Configurador de precios */
   const PACKS={basica:{name:"Básica",price:50},completa:{name:"Completa",price:100},pro:{name:"Pro",price:180}};

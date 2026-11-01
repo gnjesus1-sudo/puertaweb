@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Carta · Bar La Esquina (demo de Puerta Web)</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Archivo:wght@400;600;700&display=swap">
+<style>
+:root{--bg:#160f0b;--card:#211812;--ink:#f6ead9;--dim:#b9a58e;--acc:#ff7a2b;--line:#3a2a1f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1rem/1.5 "Archivo",system-ui,sans-serif}
+.hero{position:relative;height:42vh;min-height:260px;background:center/cover url("https://images.unsplash.com/photo-1640902106532-47dd3a2e833e?w=900&q=70&auto=format&fit=crop");display:flex;align-items:flex-end}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,15,11,.2),var(--bg))}
+.hero div{position:relative;z-index:1;padding:22px}
+h1{font:800 2.6rem/1 "Fraunces",serif;margin:0;letter-spacing:-.02em}
+.open{display:inline-flex;gap:6px;align-items:center;margin-top:10px;font-weight:700;font-size:.85rem;padding:5px 11px;border-radius:99px;background:rgba(31,157,85,.2);color:#7ce0a4}
+nav{position:sticky;top:0;z-index:5;background:rgba(22,15,11,.92);backdrop-filter:blur(10px);display:flex;gap:8px;overflow-x:auto;padding:12px 16px;border-bottom:1px solid var(--line);scrollbar-width:none}
+nav a{flex:none;text-decoration:none;color:var(--dim);font-weight:600;padding:8px 14px;border-radius:99px;border:1px solid var(--line)}
+nav a.on{background:var(--acc);color:#1b0d03;border-color:var(--acc)}
+main{padding:8px 16px 90px;max-width:640px;margin:0 auto}
+h2{font:800 1.7rem "Fraunces",serif;margin:30px 0 10px;scroll-margin-top:70px}
+.item{display:grid;grid-template-columns:1fr auto;gap:4px 14px;padding:14px 0;border-bottom:1px solid var(--line)}
+.item b{font-weight:700;font-size:1.05rem}
+.item span{color:var(--dim);font-size:.92rem;grid-column:1}
+.item em{font-style:normal;font-weight:700;color:var(--acc);grid-row:1;grid-column:2}
+.tag{display:inline-block;font-size:.7rem;font-weight:700;padding:2px 7px;border-radius:6px;background:#3a2a1f;color:var(--ink);margin-left:6px;vertical-align:2px}
+.cta{position:fixed;left:16px;right:16px;bottom:16px;max-width:608px;margin:0 auto;display:block;text-align:center;text-decoration:none;font-weight:700;padding:16px;border-radius:99px;background:var(--acc);color:#1b0d03;box-shadow:0 14px 30px -10px rgba(255,122,43,.6)}
+.demo{margin:36px 0 0;padding:16px;border-radius:14px;background:var(--card);color:var(--dim);font-size:.88rem;text-align:center}
+.demo a{color:var(--ink)}
+</style>
+</head>
+<body>
+<header class="hero"><div><h1>Bar La Esquina</h1><span class="open">● Abierto · cocina hasta las 23:30</span></div></header>
+<nav id="nav"><a href="#tapas" class="on">Tapas</a><a href="#raciones">Raciones</a><a href="#bocadillos">Bocadillos</a><a href="#bebidas">Bebidas</a><a href="#postres">Postres</a></nav>
+<main>
+  <h2 id="tapas">Tapas</h2>
+  <div class="item"><b>Patatas bravas <span class="tag">la de siempre</span></b><em>4,50 €</em><span>Salsa brava casera y alioli</span></div>
+  <div class="item"><b>Croquetas de jamón</b><em>6,00 €</em><span>6 unidades, hechas cada mañana</span></div>
+  <div class="item"><b>Gilda</b><em>2,50 €</em><span>Anchoa, aceituna y guindilla</span></div>
+  <div class="item"><b>Boquerones en vinagre</b><em>5,50 €</em><span>Con ajo y perejil</span></div>
+  <h2 id="raciones">Raciones</h2>
+  <div class="item"><b>Calamares a la andaluza</b><em>11,00 €</em><span>Con limón y alioli</span></div>
+  <div class="item"><b>Oreja a la plancha</b><em>8,50 €</em><span>Con pimentón de la Vera</span></div>
+  <div class="item"><b>Tortilla de patata</b><em>9,00 €</em><span>Poco hecha si la pides así</span></div>
+  <h2 id="bocadillos">Bocadillos</h2>
+  <div class="item"><b>Bocadillo de calamares</b><em>6,50 €</em><span>Pan de barra del día</span></div>
+  <div class="item"><b>Pepito de ternera</b><em>7,50 €</em><span>Con pimientos de Padrón</span></div>
+  <h2 id="bebidas">Bebidas</h2>
+  <div class="item"><b>Caña</b><em>2,20 €</em><span>Tirada como debe ser</span></div>
+  <div class="item"><b>Vermú de grifo</b><em>3,00 €</em><span>Con su naranja y aceituna</span></div>
+  <div class="item"><b>Copa de vino de la casa</b><em>2,80 €</em><span>Tinto o blanco</span></div>
+  <h2 id="postres">Postres</h2>
+  <div class="item"><b>Tarta de queso</b><em>5,00 €</em><span>Cremosa, al estilo vasco</span></div>
+  <div class="item"><b>Flan casero</b><em>4,00 €</em><span>Con nata</span></div>
+  <p class="demo">Esto es una carta de ejemplo hecha por Puerta Web. ¿Quieres una para tu negocio? <a href="/#contacto">Pide presupuesto</a></p>
+</main>
+<a class="cta" href="/#contacto">Quiero una carta así</a>
+<script>
+const links=[...document.querySelectorAll("nav a")],secs=links.map(a=>document.querySelector(a.getAttribute("href")));
+addEventListener("scroll",()=>{let i=0;secs.forEach((s,k)=>{if(s.getBoundingClientRect().top<120)i=k});links.forEach((a,k)=>a.classList.toggle("on",k===i));links[i].scrollIntoView({inline:"center",block:"nearest"});},{passive:true});
+</script>
+</body>
+</html>
