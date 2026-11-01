@@ -1068,6 +1068,15 @@ form#f input:focus,form#f textarea:focus{border-color:#9b6bff!important;box-shad
     document.head.appendChild(sc);})();
 
 
+  /* Envío a FormSubmit con límite de tiempo */
+  async function sendForm(fd){
+    const ctl=new AbortController(),t=setTimeout(()=>ctl.abort(),15000);
+    try{const r=await fetch("https://formsubmit.co/ajax/gnjesus1@gmail.com",{method:"POST",headers:{"Accept":"application/json"},body:fd,signal:ctl.signal});
+      const j=await r.json().catch(()=>({}));
+      if(String(j.success)==="true"||/activat/i.test(j.message||""))return true;
+      throw new Error(j.message||r.status);}
+    finally{clearTimeout(t);}
+  }
   /* Dejar opinión */
   $("rfOpen").addEventListener("click",()=>{$("rf").hidden=false;$("rfOpen").remove();$("rName").focus();});
   const stars=[...document.querySelectorAll("#stars button")];
@@ -1076,7 +1085,7 @@ form#f input:focus,form#f textarea:focus{border-color:#9b6bff!important;box-shad
     if(!$("rName").value.trim()||!$("rText").value.trim()){m.textContent="Escribe tu nombre y tu opinión.";return;}
     if(!$("rStars").value){m.textContent="Elige una puntuación.";return;}
     const fd=new FormData($("rf"));if(fd.get("_honey"))return;
-    try{const r=await fetch("https://formsubmit.co/ajax/gnjesus1@gmail.com",{method:"POST",headers:{"Accept":"application/json"},body:fd});if(!r.ok)throw 0;
+    try{await sendForm(fd);
       $("rf").innerHTML='<h3>¡Gracias por tu opinión!</h3><p class="rev-ok">La reviso y la publico en unos días.</p>';}
     catch(err){m.textContent="No se ha podido enviar. Inténtalo de nuevo en un momento.";}
   });
@@ -1125,7 +1134,7 @@ form#f input:focus,form#f textarea:focus{border-color:#9b6bff!important;box-shad
   }
   render();
 
-  /* Formulario de contacto (Netlify Forms) */
+  /* Formulario de contacto (FormSubmit) */
   const form=$("f");
   document.querySelectorAll(".chips-g").forEach(g=>{
     const single=g.classList.contains("single"),hid=g.nextElementSibling;
@@ -1151,8 +1160,7 @@ form#f input:focus,form#f textarea:focus{border-color:#9b6bff!important;box-shad
     if(!$("cOk").checked){msg.textContent="Marca la casilla de privacidad para poder enviarlo.";return;}
     const btn=form.querySelector(".send");btn.disabled=true;btn.querySelector("span").textContent="Enviando…";
     try{
-      const fd=new FormData(form);if(fd.get("_honey"))throw 0;const r=await fetch("https://formsubmit.co/ajax/gnjesus1@gmail.com",{method:"POST",headers:{"Accept":"application/json"},body:fd});
-      const j=await r.json().catch(()=>({}));if(!r.ok||String(j.success)==="false")throw 0;
+      const fd=new FormData(form);if(fd.get("_honey"))throw 0;await sendForm(fd);
       form.classList.add("sent");$("fDone").hidden=false;
     }catch(err){
       msg.innerHTML='No se ha podido enviar. Inténtalo de nuevo o llámame al <a href="tel:+34682913832">682 913 832</a>.';
